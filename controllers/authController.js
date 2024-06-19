@@ -8,8 +8,11 @@ async function getToken(req, res) {
 
   const match = bcrypt.compare(req.body.password, user.password); //devuelve true or false
   if (!match) return res.json({ msg: "verifique credenciales 2..." });
-  const token = jwt.sign({ sub: user.id }, process.env.SECRET_JWT);
-  res.json(token);
+  const token = jwt.sign({ sub: user.id, username: user.username }, process.env.SECRET_JWT, {
+    expiresIn: "1h",
+  });
+  res.json({ user, token });
+  console.log(token);
 }
 
 module.exports = { getToken };
