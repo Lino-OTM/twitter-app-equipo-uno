@@ -8,8 +8,9 @@ async function index(req, res) {
 }
 // Display the specified resource.
 async function show(req, res) {
-  console.log("entre aca");
-  const user = await User.findOne().populate("tweets").select("-password");
+  const user = await User.findOne({ username: req.params.username })
+    .populate("tweets")
+    .select("-password");
   res.json(user);
 }
 
