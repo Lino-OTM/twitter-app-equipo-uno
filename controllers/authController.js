@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken")
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
@@ -13,7 +13,7 @@ async function getToken(req, res) {
       expiresIn: "1h",
     });
 
-    res.json({ token });
+    res.json({ token, user });
   } catch {
     (error) => {
       res.json({ msg: "error en el servidor", error });

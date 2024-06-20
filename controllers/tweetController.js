@@ -9,7 +9,10 @@ async function index(req, res) {
 }
 
 // Display the specified resource.
-async function show(req, res) {}
+async function show(req, res) {
+  const tweets = await Tweet.findById(req.params.id);
+  res.json({ tweets });
+}
 
 // Store a newly created resource in storage.node
 async function store(req, res) {
