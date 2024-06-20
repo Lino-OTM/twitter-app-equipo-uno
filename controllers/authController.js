@@ -13,7 +13,7 @@ async function getToken(req, res) {
       expiresIn: "1h",
     });
 
-    res.send({ user, token });
+    res.json({ token });
   } catch (error) {
     res.json({ msg: "Error en el servidor", error });
   }
