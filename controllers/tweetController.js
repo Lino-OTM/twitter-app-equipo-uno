@@ -4,7 +4,10 @@ const jwt = require("jsonwebtoken");
 
 // Display a listing of the resource.
 async function index(req, res) {
-  const tweets = await Tweet.find().limit(20).populate("likes").limit(20).populate({ path: "user", select: "firstname lastname username image" });
+  const tweets = await Tweet.find()
+    .limit(20)
+    .limit(20)
+    .populate({ path: "user", select: "firstname lastname username image" });
   res.json(tweets);
 }
 
@@ -16,8 +19,11 @@ async function show(req, res) {
 
 // Store a newly created resource in storage.node
 async function store(req, res) {
-  await Tweet.create({ text: req.body.text, user: req.auth.sub });
-  res.json({ msg: "se creo el tweet" });
+  const tweet = await Tweet.create({ text: req.body.text, user: req.auth.sub });
+  const user = await User.findById(req.auth.sub);
+  user.tweets.push(tweet);
+  await user.save();
+  res.json(tweet);
 }
 
 // Update the specified resource in storage.

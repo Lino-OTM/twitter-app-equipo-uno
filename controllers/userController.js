@@ -9,7 +9,13 @@ async function index(req, res) {
 // Display the specified resource.
 async function show(req, res) {
   const user = await User.findOne({ username: req.params.username })
-    .populate("tweets")
+    .populate({
+      path: "tweets",
+      populate: {
+        path: "user",
+        select: "firstname lastname username image",
+      },
+    })
     .select("-password");
   res.json(user);
 }

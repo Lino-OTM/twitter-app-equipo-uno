@@ -7,7 +7,7 @@ async function getToken(req, res) {
     const user = await User.findOne({ email: req.body.email });
     if (!user) return res.json({ msg: "verifque credenciales 1..." });
 
-    const match = bcrypt.compare(req.body.password, user.password); //devuelve true or false
+    const match = await bcrypt.compare(req.body.password, user.password); //devuelve true or false
     if (!match) return res.json({ msg: "verifique credenciales 2..." });
     const token = jwt.sign({ sub: user.id, username: user.username }, process.env.SECRET_JWT, {
       expiresIn: "1h",
