@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 // Display a listing of the resource.
 async function index(req, res) {
-  const tweets = await Tweet.find().limit(20).populate("likes").limit(20);
+  const tweets = await Tweet.find().limit(20).populate("likes").limit(20).populate({ path: "user", select: "firstname lastname username image" });
   res.json(tweets);
 }
 

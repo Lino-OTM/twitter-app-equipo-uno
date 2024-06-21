@@ -24,7 +24,7 @@ module.exports = async () => {
   // Crear Tweets y asociarlos a usuarios
   for (const user of users) {
     for (let i = 0; i < Math.ceil(Math.random() * 10); i++) {
-      const createdTweet = new Tweet({ text: faker.lorem.sentence(20) });
+      const createdTweet = new Tweet({ text: faker.lorem.sentence(20), user: user._id });
       tweets.push(createdTweet);
       const tweetToLike = tweets[Math.floor(Math.random() * tweets.length)];
       tweetToLike.likes.push(user._id);
