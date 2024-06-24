@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const formidable = require("formidable");
 
 // Display a listing of the resource.
 async function index(req, res) {
@@ -22,8 +23,26 @@ async function show(req, res) {
 
 // Store a newly created resource in storage.
 async function store(req, res) {
-  const { firstname, lastname, email, username, password } = req.body;
-  await User.create({ firstname, lastname, email, username, password });
+  const form = formidable({
+    multiples: true,
+    keepExtensions: true,
+    uploadDir: __dirname + "/../public/img",
+  });
+
+  form.parse(req, async (err, fields, files) => {
+    const { firstname, lastname, email, username, password } = fields;
+    await User.create({
+      firstname,
+      lastname,
+      email,
+      username,
+      password,
+      image: files.image.newFilename,
+    });
+    console.log(fields);
+    console.log(files);
+  });
+
   res.json({ msg: "se ha creado el usuario" });
 }
 

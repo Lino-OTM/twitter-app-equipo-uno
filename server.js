@@ -3,14 +3,14 @@ const express = require("express");
 const routes = require("./routes");
 const port = process.env.APP_PORT;
 const app = express();
-const cors = require('cors');
+const cors = require("cors");
 
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
 routes(app);
-
 
 app.listen(port, () => {
   console.log(`\n[Express] Servidor corriendo en el puerto ${port}.`);

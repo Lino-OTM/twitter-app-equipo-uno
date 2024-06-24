@@ -19,7 +19,10 @@ async function show(req, res) {
 
 // Store a newly created resource in storage.node
 async function store(req, res) {
-  const tweet = await Tweet.create({ text: req.body.text, user: req.auth.sub });
+  const tweet = await Tweet.create({
+    text: req.body.text,
+    user: req.auth.sub,
+  });
   const user = await User.findById(req.auth.sub);
   user.tweets.push(tweet);
   await user.save();
